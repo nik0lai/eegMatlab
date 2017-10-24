@@ -10,51 +10,6 @@ measure = {'Close' 'Open'};
 % measure = {'Open'};
 
 Participants = {
-% 'Myriam_Cortes'	'S01'	'femme'	'Eugenio'
-% 'Luis_Ramirez'	'S02'	'homme'	'Vladimir'
-% 'Patricia_Caicedo'	'S03'	'femme'	'Eugenio'
-% 'Beatriz_Navarrete'	'S04'	'femme'	'Vladimir'
-% 'Alejandro_Sandoval'	'S06'	'homme'	'Eugenio'
-% 'Claudia_Navarrete'	'S07'	'femme'	'Vladimir'
-% 'Felipe_Echevarria'	'S08'	'homme'	'Eugenio'
-% 'Andres_Chavez'	'S10'	'homme'	'Vladimir'
-% 'Vilma_Caroca'	'S11'	'femme'	'Eugenio'
-% 'Alejandra_Caceres'	'S12'	'femme'	'Eugenio'
-% 'Lucia_Concha'	'S17'	'femme'	'Eugenio'
-% 'Carlos_Espinoza'	'S18'	'homme'	'Eugenio'
-% 'Yanete_Alvares'	'S20'	'femme'	'Vladimir'
-% 'Rodolfo_Sanchez'	'S21'	'homme'	'Vladimir'
-% 'Juan_Gonzales'	'S22'	'homme'	'Eugenio'
-% 'Isaac_Iturriaga'	'S23'	'homme'	'Eugenio'
-% 'Karina_Veliz'	'S24'	'femme'	'Eugenio'
-% 'Arnaldo_Arriasa'	'S26'	'homme'	'Eugenio'
-% 'Carmen_Faundez'	'S27'	'femme'	'Eugenio'
-% 'Jose_Perez'	'S28'	'homme'	'Vladimir'
-% 'Sandra_Valenzuela'	'S29'	'femme'	'Eugenio'
-% 'Patricia_Lizama'	'S32'	'femme'	'Vladimir'
-% 'Juana_Garrido'	'S33'	'femme'	'Vladimir'
-% 'Carlos_Contreras'	'S34'	'homme'	'Eugenio'
-% 'Marcela_Caballero'	'S35'	'femme'	'Eugenio'
-% 'Claudia_Vargas'	'S36'	'femme'	'Eugenio'
-% 'Diego_Contreras'	'S37'	'homme'	'Eugenio'
-% 'Yurismi_Vilches'	'S38'	'femme'	'Eugenio'
-% 'Manuel_Perez'	'S39'	'homme'	'Eugenio'
-% 'Pamela_Fuentealba'	'S40'	'femme'	'Vladimir'
-% 'Scarlet_Alarcon'	'S41'	'femme'	'Eugenio'
-% 'Liliana_Guerra'	'S42'	'femme'	'Eugenio' [19,34,48,56] [48,56]
-% 'MariaJose_Castillo'	'S43'	'femme'	'Eugenio' [64] [1,2,7,45,59,64]
-% 'Juan_Gonzalez_Reyes'	'S44'	'homme'	'Eugenio' [] []
-% 'Halinka_Guerrero'	'S45'	'femme'	'Eugenio' [33,52,53] [51,52,53,60]
-% 'Francisco_Sepulveda'	'S46'	'homme'	'Eugenio' [5] [5,24]
-% 'Constanza_Cofre'	'S47'	'femme'	'Vladimir' [7,43] [7]
-% 'Nicole_Cofre'	'S48'	'femme'	'Eugenio' [3,8,9,15] [3]
-% 'MariaJose_Pena'	'S49'	'femme'	'Vladimir' [15,57] [15,52,57]
-% 'Gabriela_Valdivia'	'S50'	'femme'	'Eugenio' [45] [45]
-% 'David_Hernandez'	'S51'	'homme'	'Eugenio' [2,3,16] [3]
-% 'Daniela_Isamit'	'S52'	'femme'	'Eugenio' [9,57] [57]
-% 'Victor_Ponce'	'S53'	'homme'	'Vladimir' [] []
-% 'Paola_Candia'	'S54'	'femme'	'Vladimir' [36] [37]
-% 'Simon_SanMartin'	'S55'	'homme'	'Eugenio' [34] []
 % 'Carlos_Nunez'	'S56'	'homme'	'Vladimir' [15,53] [15,52]
 % 'Elizabeth_Iturriaga'	'S57'	'femme'	'Vladimir' [18,22,24] [15,22,24]
 % 'Kevin_Jara'	'S58'	'homme'	'Vladimir' [41,44,46] [21]

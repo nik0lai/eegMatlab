@@ -2,16 +2,18 @@
 
 % This script takes a bdf file, preprocess it (add dataset info, resample, add channels locations, low and highpass filter) and save the new dataset.
 
-%% 0.1 Prepare enviroment
+%% 0.0 Prepare enviroment
 
 eeglab; % open eeglab to lighten paths to the eeglab ways
 close all; % close everything
 clc; % clear command line
 clear all; % clear enviroment
 
-%% 0.2 Directory and file names
+%% 0.1 Who is going down?
 
 SUBJECT_TO_PREPROCESS = 2; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
+
+%% 0.2 Directory and file names
 
 my_dir = '/home/niki/'; % set computer directory
 bdf_dir = 'Documents/EEGeses/Agustiniano/bdf/'; % bdf folder directory
@@ -97,7 +99,7 @@ for i = 1:size(bdf_file_names, 2)
 
 current_setfile_path = strcat(my_dir, set_dir, subject_to_preprocess, '/'); % path to folder where set files are to be saved
 
-EEG = pop_saveset( EEG, 'filename', char(strcat(bdf_file_name_extensionless, '.set')),'filepath', char(current_setfile_path)); % save current dataset
+pop_saveset( EEG, 'filename', char(strcat(bdf_file_name_extensionless, '.set')),'filepath', char(current_setfile_path)); % save current dataset
 
 display('dataset saved')
 
