@@ -29,12 +29,31 @@ set_dir = 'Documents/EEGeses/Agustiniano/set/'; % set files folder (output)
 %% BAD CHANNELS
 % bad_channels = [29,30,31,32,16]; % define channels to exclude from ICA
 
-bad_channels_social = [];
-bad_channels_negation = [29,30,31,32,16];
-bad_channels_intero = [29,30,31,32,16];
-bad_channels_resting = [29,30,31,32,16];
 
-strfind(set_files(1).name, 'INTERO')
+%%
+Participants = {
+'CH_F17_CN_101_NEGATION'				[29,30,31,32,16]
+'CH_F17_CN_101_INTERO'				[29,30,31,32,16]
+'CH_F17_CN_101_RESTING'				[29,30,31,32,16]
+'CH_F17_CN_107_SOCIAL'				[29,30,31,32,2,3,18,33,34,78,104]
+'CH_F17_CN_107_NEGATION'				[29,30,31,32,2,3,18,20,100,102,114]
+'CH_F17_CN_107_INTERO'				[29,30,31,32,2,3,18,20,100,102,114]
+'CH_F17_CN_107_RESTING'				[29,30,31,32,2,3,18,100]
+'CH_F17_AL_302_INTERO'				[29,30,31,32,18,24,111]
+'CH_F17_AL_302_NEGATION'				[29,30,31,32,18,58,59]
+'CH_F17_AL_302_RESTING'				[29,30,31,32,28,32,75]
+'CH_F17_AL_302_SOCIAL'				[29,30,31,32,18]
+};
+
+
+
+%%
+% bad_channels_social = [];
+% bad_channels_negation = [29,30,31,32,16];
+% bad_channels_intero = [29,30,31,32,16];
+% bad_channels_resting = [29,30,31,32,16];
+
+% strfind(set_files(1).name, 'INTERO')
 
 
 %% Get info about channels
@@ -44,7 +63,9 @@ internal_channels = setdiff(1:number_channels, external_channels); % identify in
 
 %% Read files to ICA
 
+set_files(1).name
 
+pop_loadset(
 
 
 %% ICA

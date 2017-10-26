@@ -44,7 +44,7 @@ for state = measure
         EEG         = pop_loadset('filename', strcat(name, '.set'), 'filepath',strcat(dir, 'SET/OK/'));
 %         numchan     = EEG.nbchan;                               % Numero de canales
         not_chanica	= names(i, icaindex);                          % Canales no usados en ICA
-        do_ica      = setdiff(1:numchan, cell2mat(not_chanica));              % Canales a no usar en ICA
+        do_ica      = setdiff(1:numchan, cell2mat(not_chanica));              % Canales a usar en ICA
         EEG         = pop_runica(EEG, 'extended',1,'interupt','on', 'chanind', do_ica); %ICA
         EEG         = pop_saveset( EEG, 'filename', strcat(name, '.set'), 'filepath',strcat(dir, 'SET/OK/'));
     end
