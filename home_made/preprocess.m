@@ -11,7 +11,7 @@ clear all; % clear enviroment
 
 %% 0.1 Who is going down?
 
-SUBJECT_TO_PREPROCESS = 2; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
+SUBJECT_TO_PREPROCESS = 6; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
 
 %% 0.2 Directory and file names
 
@@ -95,7 +95,6 @@ for i = 1:size(bdf_file_names, 2)
     EEG = pop_editset(EEG, 'session', [ix(i)]); % task order
     EEG = pop_editset(EEG, 'condition', char(current_file_subject_info(5))); % task condition (intero, social_learning, negation, resting)
     EEG = pop_editset(EEG, 'group', char(current_file_subject_info(3))); % subject group (control, alzhaimer, dft, parkinson?)
-
 
 current_setfile_path = strcat(my_dir, set_dir, subject_to_preprocess, '/'); % path to folder where set files are to be saved
 
