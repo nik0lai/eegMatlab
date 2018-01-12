@@ -11,7 +11,7 @@ clear all; % clear enviroment
 
 %% 0.1 Who is going down?
 
-SUBJECT_TO_PREPROCESS = 6; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
+SUBJECT_TO_PREPROCESS = 11; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
 
 %% 0.2 Directory and file names
 
