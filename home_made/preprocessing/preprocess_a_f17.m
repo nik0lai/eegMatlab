@@ -11,9 +11,21 @@ close all; % close everything
 clc; % clear command line
 clear all; % clear enviroment
 
-%% 0.1 Who is going down?
+%% PARAMETERS FOR PREPROCESSING (USER DEPENDENT)
+
+% Subject to preprocess
 
 SUBJECT_TO_PREPROCESS = [114]; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
+
+% Parameters for preprocessing
+    
+    % filtering
+    new_samplerate = 256; % new sample rate
+    lowpass_filter = 0.5; % lowpass filter
+    highpass_filter = 30; % highpass filter
+    
+     % re-reference  
+    ref_chann = [129 130]; % channels to use as reference (mastoids)
 
 %% 0.2 Paths to files and folders
 
@@ -37,13 +49,16 @@ for i = 1:size(SUBJECT_TO_PREPROCESS,2)
     participant_to_preprocess_index  = [participant_to_preprocess_index position];
 end
 
-display('participants to preprocess. READY');
+fprintf('\n\n**********\nparticipants to preprocess. READY\n**********\n\n');
+
 %% 1 Big loop that moves along participants set to be preprocessed
 
-display('Begin EVIL loop between participants')
+fprintf('\n\n**********\nBegin EVIL loop between participants\n**********\n\n');
+
+files_preprocessed = [];
 
 for z = 1:size(participant_to_preprocess_index, 2);
-    %z=1
+    % z=1
     
     %% Get name of participant to preprocess
     subject_to_preprocess = char(bdf_folders(participant_to_preprocess_index(z)).name); % PARTICIPANT TO PREPROCESS
@@ -59,18 +74,11 @@ for z = 1:size(participant_to_preprocess_index, 2);
     bdf_file_names = {bdf_files.name}; % convert names to characters
     
     display('path to current participant. READY');
-    
-    %% 0.3 Parameters for preprocessing
-    
-    new_samplerate = 256; % new sample rate
-    lowpass_filter = 0.5; % lowpass filter
-    highpass_filter = 30; % highpass filter
-    
-    display('parameters for preprocessing. READY')
+     
     
     %% 1. Evil for loop
     
-    display('Begin EVIL loop within participant')
+    fprintf('\n\n**********\nBegin EVIL loop within participant\n**********\n\n');
     
     for i = 1:size(bdf_file_names, 2)
         
@@ -88,8 +96,8 @@ for z = 1:size(participant_to_preprocess_index, 2);
         
         %% READ FILE
         EEG = pop_biosig(char(current_file_path)); % read bdf file
-        
-        display('Bdf loaded')
+                
+        fprintf('\n\n**********\nBdf loaded\n**********\n\n');
         
         %% Channel locations
         
@@ -105,18 +113,17 @@ for z = 1:size(participant_to_preprocess_index, 2);
                
         %% 1.2.2 info to re-reference
         
-        ref_chann = [129 130]; % channels to use as reference (mastoids)
         ref_exclude_chann = setdiff(external_channels, ref_chann); % channels to exclude (all non-head channels except mastoids)
         
-        %% 1.2.3 re-reference        
+        %% 1.2.3 re-reference (keeping references)
         
         EEG = pop_reref( EEG, ref_chann,'exclude', ref_exclude_chann ,'keepref','on');
                 
         %% 1.3 Resample
         
         EEG = pop_resample(EEG, new_samplerate); % resample
-              
-        display('data set downsampled and channels locations assigned')
+                
+        fprintf('\n\n**********\ndata set downsampled and channels locations assigned\n**********\n\n');
         
         %% Cut edges
         
@@ -151,42 +158,54 @@ for z = 1:size(participant_to_preprocess_index, 2);
         
         EEG = pop_eegfiltnew(EEG, [],lowpass_filter,1690,1,[],1); % lowpass filter (what are the other parameters?)
         EEG = pop_eegfiltnew(EEG, [],highpass_filter,114,0,[],1); % highpass filter (what are the other parameters?)
-        
-        display('dataset filtered')
+                
+        fprintf('\n\n**********\ndataset filtered\n**********\n\n')
         
         %% 2. Save dataset ready for ICA
         
-        
-        %% assign data
+        % assign data
         EEG = pop_editset(EEG, 'setname', bdf_file_name_extensionless); % asign dataset name using bdf file name
         EEG = pop_editset(EEG, 'subject', char(subject_to_preprocess)); % subject code
-        EEG = pop_editset(EEG, 'session', [ix(i)]); % task order % FIX THIS.
+        EEG = pop_editset(EEG, 'session', find(ix == i)); % task order % FIX THIS.
         EEG = pop_editset(EEG, 'condition', char(current_file_subject_info(5))); % task condition (intero, social_learning, negation, resting)
         EEG = pop_editset(EEG, 'group', char(current_file_subject_info(3))); % subject group (control, alzhaimer, dft, parkinson?)
         
-        %% folder for set files
-        
+        % folder for set files
         current_setfile_path = strcat(my_dir, set_dir, subject_to_preprocess, '/'); % path to folder where set files are to be saved
         
         % Lopp to create folder
         if exist(current_setfile_path, 'dir') == 7;
-            display('folder already EXISTS!');
+            fprintf('\n\n**********\nfolder already EXISTS!\n**********\n\n');
         elseif exist(current_setfile_path, 'dir') == 0;
             mkdir(current_setfile_path);
-            display('folder CREATED!');
+            fprintf('\n\n**********\nfolder CREATED!\n**********\n\n');
         end;
         
-        %%
+        % save dataset
         pop_saveset( EEG, 'filename', char(strcat(bdf_file_name_extensionless, '.set')),'filepath', char(current_setfile_path)); % save current dataset
-        
-        display('dataset saved')
+                
+        fprintf('\n\n**********\ndataset saved\n**********\n\n');
         
         clear EEG; % erase saved dataset to free memmory
         
         display('YEAH!')
         
     end
+
+    % store 
+    files_preprocessed = [files_preprocessed {bdf_files.name}];
+        
     
+        
 end
+
+
+%% PRINT PROCESSED FILE NAMES
+
+fprintf('\n\nPREPROCESSED FILES\n**********\n**********\n')
+display(char(files_preprocessed))
+fprintf('**********\n**********\n\n')
+
+
 
 
