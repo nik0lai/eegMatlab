@@ -13,7 +13,7 @@ clear all; % clear enviroment
 
 %% 0.1 Who is going down?
 
-SUBJECT_TO_PREPROCESS = [405]; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
+SUBJECT_TO_PREPROCESS = [114]; % in the bdf folder, number of the folder to preprocess (when order by name, ascendent)
 
 %% 0.2 Paths to files and folders
 
@@ -33,15 +33,15 @@ participant_to_preprocess_index = []; % empty something
 %% 0.2.2 This loop looks for the position of the participants to preprocess in the bdf folder
 
 for i = 1:size(SUBJECT_TO_PREPROCESS,2)
-    position      = find(bdf_folders_names_num==SUBJECT_TO_PREPROCESS(i));
+    position                         = find(bdf_folders_names_num==SUBJECT_TO_PREPROCESS(i));
     participant_to_preprocess_index  = [participant_to_preprocess_index position];
 end
-
 
 display('participants to preprocess. READY');
 %% 1 Big loop that moves along participants set to be preprocessed
 
 display('Begin EVIL loop between participants')
+
 for z = 1:size(participant_to_preprocess_index, 2);
     %z=1
     
@@ -75,7 +75,7 @@ for z = 1:size(participant_to_preprocess_index, 2);
     for i = 1:size(bdf_file_names, 2)
         
         %% 1.1 Read .bdf files, assign dataset name, subject code, condition task, subject group
-        % i = 3
+        % i = 1
         
         %% path to file, file name and file info
         current_file_path = char(strcat(my_dir, bdf_dir, subject_to_preprocess, '/', bdf_file_names(i))); % path to current file (LOOP CONTEXTUAL!!)
@@ -91,19 +91,38 @@ for z = 1:size(participant_to_preprocess_index, 2);
         
         display('Bdf loaded')
         
-        %% 1.2 Resample and add channels
-        
-        EEG = pop_resample(EEG, new_samplerate); % resample
+        %% Channel locations
         
         EEG = pop_editset(EEG, 'chanlocs', char(strcat(my_dir, channel_location_dir))); % add channels locations
+                
+        %% 1.2 Re-reference to mastoids
         
+        %% 1.2.1 Get info about channels
+            
+        number_channels = EEG.nbchan; % get EEG total number of channels
+        external_channels = 129:number_channels; % identify external channels
+        internal_channels = setdiff(1:number_channels, external_channels); % identify internal (or channels in the head) channels
+               
+        %% 1.2.2 info to re-reference
+        
+        ref_chann = [129 130]; % channels to use as reference (mastoids)
+        ref_exclude_chann = setdiff(external_channels, ref_chann); % channels to exclude (all non-head channels except mastoids)
+        
+        %% 1.2.3 re-reference        
+        
+        EEG = pop_reref( EEG, ref_chann,'exclude', ref_exclude_chann ,'keepref','on');
+                
+        %% 1.3 Resample
+        
+        EEG = pop_resample(EEG, new_samplerate); % resample
+              
         display('data set downsampled and channels locations assigned')
         
         %% Cut edges
         
         if size(EEG.event, 2) == 0
-            
-            display('CHE, no hay marcas!')
+                        
+            fprintf('\n\n**********\nCHE, no hay marcas!\n**********\n\n')
             
         elseif not(strcmp(current_file_subject_info(5),'RESTING'))
             
@@ -117,15 +136,15 @@ for z = 1:size(participant_to_preprocess_index, 2);
             % cut edges
             EEG = pop_select( EEG,'time',[first_event_pos_time last_event_pos_time]);
             
-            display('NO REST FOR THE WICKED')
+            fprintf('\n\n**********\nNO REST FOR THE WICKED\n**********\n\n')
             
         elseif strcmp(current_file_subject_info(5),'RESTING')
-            display('RESTING, KEEP RESTING')
+            fprintf('\n\n**********\nRESTING, KEEP RESTING\n**********\n\n')
             
         end
         
         %% 1.3 Create EKG channel
-        
+                
         EEG = pop_eegchanoperator( EEG, {  'ch137 = ch131 - ch132 label EKG'} , 'ErrorMsg', 'popup', 'Warning', 'on' ); % Create EKG channel with the substraction of 131-132
         
         %% 1.4 Filter: lowpass, highpass
@@ -141,7 +160,7 @@ for z = 1:size(participant_to_preprocess_index, 2);
         %% assign data
         EEG = pop_editset(EEG, 'setname', bdf_file_name_extensionless); % asign dataset name using bdf file name
         EEG = pop_editset(EEG, 'subject', char(subject_to_preprocess)); % subject code
-        EEG = pop_editset(EEG, 'session', [ix(i)]); % task order
+        EEG = pop_editset(EEG, 'session', [ix(i)]); % task order % FIX THIS.
         EEG = pop_editset(EEG, 'condition', char(current_file_subject_info(5))); % task condition (intero, social_learning, negation, resting)
         EEG = pop_editset(EEG, 'group', char(current_file_subject_info(3))); % subject group (control, alzhaimer, dft, parkinson?)
         
