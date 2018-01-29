@@ -1,4 +1,4 @@
-%% About
+%% preprocess bdf files to identify bad channels
 
 % This script takes a bdf file,
 % preprocess it (add dataset info, resample, add channels locations, low and highpass filter)
