@@ -10,23 +10,9 @@ measure = {'Close' 'Open'};
 % measure = {'Open'};
 
 Participants = {
-% 'Carlos_Nunez'	'S56'	'homme'	'Vladimir' [15,53] [15,52]
-% 'Elizabeth_Iturriaga'	'S57'	'femme'	'Vladimir' [18,22,24] [15,22,24]
-% 'Kevin_Jara'	'S58'	'homme'	'Vladimir' [41,44,46] [21]
-% 'Fabio_Stei'	'S59'	'homme'	'Eugenio' [20] [20,58]
-% 'Alexis_Fuentes'	'S60'	'homme'	'Eugenio' [] []
-% 'Pia_Jofre'	'S61'	'femme'	'Eugenio' [1,18,34,38] [38,42,59]
-% 'Gonzalo_Sanzana'	'S62'	'homme'	'Eugenio' [15,31] []
-% 'Joan_Aravena'	'S63'	'femme'	'Eugenio' [1,9,53] [1,9]
-% 'Jocelyn_Diaz'	'S64'	'femme'	'Eugenio' [34,53,64] [15,8,53,54]
-% 'Krstyn_Pena'	'S65'	'femme'	'Eugenio' [31] [43,44,51,52]
-% 'Barbara_Gutierrez'	'S66'	'femme'	'Vladimir' [14,57] [14,57]
-% 'Gisela_Torres'	'S67'	'femme'	'Eugenio' [54,57,62,64] [54,57]
-% 'Marisela_Neira'	'S68'	'femme'	'Eugenio' [20,57] [20,57]
-% 'Matias_Jofre'	'S69'	'homme'	'Eugenio' [42] [45]
-% 'Noelia_Mella'	'S70'	'femme'	'Eugenio' [53,61] [53,61]
-% 'Carolina_Zamora'	'S71'	'femme'	'Eugenio' [18,39] [18,39]
-'Jose_Villanueva'	'S72'	'homme'	'Eugenio' [32,40] [40,62]
+% 'carl'	'S56'	'homme'	'vlad' [15,53] [15,52]
+% 'eliz'	'S57'	'femme'	'vlaf' [18,22,24] [15,22,24]
+
     };
 numchan = 64;       % Numero de canales
 

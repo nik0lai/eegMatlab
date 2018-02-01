@@ -4,9 +4,9 @@ eeglab; % open eeglab
 close all; 
 clc;
 clear all;
-dir         = '/home/niki/Documents/EEGeses/Agustiniano/bdf/TESTING';	% big files folder
+dir         = '/home/user/Documents/EEGeses/Agustiniano/bdf/TESTING';	% big files folder
 % cd(dir);
-eeglabpath  = '/home/neurobot/Drive/00EEG/Tools/eeglab14_1_1b';     %eeglab's folder
+eeglabpath  = '/home/user/Drive/00EEG/Tools/eeglab14_1_1b';     %eeglab's folder
 minutes     = 5;
 rMax        = 100;
 IBIs        = struct;
@@ -21,68 +21,8 @@ measure = {'Close'};
 % measure = {'Open'};
 
 Participants = {
-% 'Myriam_Cortes'	'S01'	'femme'	'Eugenio'
-% 'Luis_Ramirez'	'S02'	'homme'	'Vladimir'
-% 'Patricia_Caicedo'	'S03'	'femme'	'Eugenio'
-% 'Beatriz_Navarrete'	'S04'	'femme'	'Vladimir'
-% 'Alejandro_Sandoval'	'S06'	'homme'	'Eugenio'
-% 'Claudia_Navarrete'	'S07'	'femme'	'Vladimir'
-% 'Felipe_Echevarria'	'S08'	'homme'	'Eugenio'
-% 'Andres_Chavez'	'S10'	'homme'	'Vladimir'
-% 'Vilma_Caroca'	'S11'	'femme'	'Eugenio'
-% 'Alejandra_Caceres'	'S12'	'femme'	'Eugenio'
-'Lucia_Concha'	'S17'	'femme'	'Eugenio'
-% 'Carlos_Espinoza'	'S18'	'homme'	'Eugenio'
-% 'Yanete_Alvares'	'S20'	'femme'	'Vladimir'
-% 'Rodolfo_Sanchez'	'S21'	'homme'	'Vladimir'
-% 'Juan_Gonzales'	'S22'	'homme'	'Eugenio'
-% 'Isaac_Iturriaga'	'S23'	'homme'	'Eugenio'
-% 'Karina_Veliz'	'S24'	'femme'	'Eugenio'
-% 'Arnaldo_Arriasa'	'S26'	'homme'	'Eugenio'
-% 'Carmen_Faundez'	'S27'	'femme'	'Eugenio'
-% 'Jose_Perez'	'S28'	'homme'	'Vladimir'
-% 'Sandra_Valenzuela'	'S29'	'femme'	'Eugenio'
-% 'Patricia_Lizama'	'S32'	'femme'	'Vladimir'
-% 'Juana_Garrido'	'S33'	'femme'	'Vladimir'
-% 'Carlos_Contreras'	'S34'	'homme'	'Eugenio'
-% 'Marcela_Caballero'	'S35'	'femme'	'Eugenio'
-% 'Claudia_Vargas'	'S36'	'femme'	'Eugenio'
-% 'Diego_Contreras'	'S37'	'homme'	'Eugenio'
-% 'Yurismi_Vilches'	'S38'	'femme'	'Eugenio'
-% 'Manuel_Perez'	'S39'	'homme'	'Eugenio'
-% 'Pamela_Fuentealba'	'S40'	'femme'	'Vladimir'
-% 'Scarlet_Alarcon'	'S41'	'femme'	'Eugenio'
-% 'Liliana_Guerra'	'S42'	'femme'	'Eugenio'
-% 'MariaJose_Castillo'	'S43'	'femme'	'Eugenio'
-% 'Juan_Gonzalez_Reyes'	'S44'	'homme'	'Eugenio'
-% 'Halinka_Guerrero'	'S45'	'femme'	'Eugenio'
-% 'Francisco_Sepulveda'	'S46'	'homme'	'Eugenio'
-% 'Constanza_Cofre'	'S47'	'femme'	'Vladimir'
-% 'Nicole_Cofre'	'S48'	'femme'	'Eugenio'
-% 'MariaJose_Pena'	'S49'	'femme'	'Vladimir'
-% 'Gabriela_Valdivia'	'S50'	'femme'	'Eugenio'
-% 'David_Hernandez'	'S51'	'homme'	'Eugenio'
-% 'Daniela_Isamit'	'S52'	'femme'	'Eugenio'
-% 'Victor_Ponce'	'S53'	'homme'	'Vladimir'
-% 'Paola_Candia'	'S54'	'femme'	'Vladimir'
-% 'Simon_SanMartin'	'S55'	'homme'	'Eugenio'
-% 'Carlos_Nunez'	'S56'	'homme'	'Vladimir'
-% 'Elizabeth_Iturriaga'	'S57'	'femme'	'Vladimir'
-% 'Kevin_Jara'	'S58'	'homme'	'Vladimir'
-% 'Fabio_Stei'	'S59'	'homme'	'Eugenio'
-% 'Alexis_Fuentes'	'S60'	'homme'	'Eugenio'
-% 'Pia_Jofre'	'S61'	'femme'	'Eugenio'
-% 'Gonzalo_Sanzana'	'S62'	'homme'	'Eugenio'
-% 'Joan_Aravena'	'S63'	'femme'	'Eugenio'
-% 'Jocelyn_Diaz'	'S64'	'femme'	'Eugenio'
-% 'Krstyn_Pena'	'S65'	'femme'	'Eugenio'
-% 'Barbara_Gutierrez'	'S66'	'femme'	'Vladimir'
-% 'Gisela_Torres'	'S67'	'femme'	'Eugenio'
-% 'Marisela_Neira'	'S68'	'femme'	'Eugenio'
-% 'Matias_Jofre'	'S69'	'homme'	'Eugenio'
-% 'Noelia_Mella'	'S70'	'femme'	'Eugenio'
-% 'Carolina_Zamora'	'S71'	'femme'	'Eugenio'
-% 'Jose_Villanueva'	'S72'	'homme'	'Eugenio'
+% 'subject_name'	'S01'	'femme'	'eug'
+% 'subject_name'	'S02'	'homme'	'vlad'
     };
 
 %% Metadata file

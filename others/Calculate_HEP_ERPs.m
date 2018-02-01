@@ -2,7 +2,7 @@
 close all;
 clc;
 clear;
-mydir       = '/mnt/A60CFBD40CFB9D8D/LABWORKS/Huepe/Resting/EEG/';
+mydir       = '/mnt/A60CFBD40CFB9D8D/LABWORKS/dir/Resting/EEG/';
 setdir      = 'SET/MERGED/';
 allfiles	= dir(strcat(mydir,setdir,'*.set'));
 filelist	= {allfiles.name};
@@ -15,7 +15,7 @@ for i   = 1:size(filelist, 2)
     EEG = pop_basicfilter(EEG,  1:64 , 'Boundary',  -99, 'Cutoff', 40,...
         'Design', 'butter', 'Filter', 'lowpass', 'Order',  2, 'RemoveDC', 'on');
     EEG = pop_reref(EEG, [16 53] ,'exclude',[65:76] ,'keepref','on');
-    EEG = pop_binlister(EEG , 'BDF', '/home/neurobot/Drive/00EEG/Proyectos/Huepe/Resting/Heart/binsRestingHEP.txt',...
+    EEG = pop_binlister(EEG , 'BDF', '/home/neurobot/Drive/00EEG/Proyectos/dir/Resting/Heart/binsRestingHEP.txt',...
         'IndexEL',  1, 'SendEL2', 'EEG', 'UpdateEEG', 'on', 'Voutput', 'EEG');
     EEG = pop_epochbin(EEG, [-200.0  600.0],  [ -200 -50]);
     erpname = char(setname);
