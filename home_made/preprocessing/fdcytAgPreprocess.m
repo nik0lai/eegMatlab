@@ -213,8 +213,8 @@ if exist([mainDir 'automaticRecordTable.csv']) == 2
     newRecordTable = [oldRecordTable; recordTable];   
     writetable(newRecordTable , [mainDir 'automaticRecordTable.csv']);
     
-elseif ~exist([mainDir 'automaticRecordTable.csv']) == 2
-    disp(['no previous record of preprocessing in ' mainDir])
+elseif exist([mainDir 'automaticRecordTable.csv']) == 0
+    disp(['no previous record of preprocessing in ' mainDir '. new file created'])
     writetable(recordTable, [mainDir 'automaticRecordTable.csv'])
 end
 
