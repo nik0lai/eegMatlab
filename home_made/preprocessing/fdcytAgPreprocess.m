@@ -5,9 +5,6 @@
 %     Import channels location
 %     Filter data
 
-% TODO: check line to re-reference
-
-
 %% Prepare enviroment
 
 clear;      % clear enviroment
@@ -97,7 +94,7 @@ channExt  = 129:channNumb;                  % identify external channels
 channInt  = setdiff(1:channNumb, channExt); % identify internal (channels in the head) channels
 rerefExcl = setdiff(channExt, rerefChanns); % external channels to be exclude of rereferencing
 
-EEG = pop_reref(EEG, [129 130], 'exclude', rerefExcl, 'keepref', 'on');
+EEG = pop_reref(EEG, [129 130], 'exclude', rerefExcl);
 
 %% filter
 
@@ -129,10 +126,12 @@ elseif strcmp(bdfInfo(3),'RESTING')
     
 end
 
+EEG.nbchan
 
 %% create ekg channel
-
-EEG = pop_eegchanoperator(EEG, {'ch137 = ch131 - ch132 label EKG'} , 'ErrorMsg', 'popup', 'Warning', 'on'); % Create EKG channel with the substraction of 131-132
+% If we apply mastoid reref we end up with two lesser channels
+% so ekg is not 137 but 135
+EEG = pop_eegchanoperator(EEG, {'ch135 = ch131 - ch132 label EKG'} , 'ErrorMsg', 'popup', 'Warning', 'on'); % Create EKG channel with the substraction of 131-132
 
 %% assign data to set file
 % dataset name
@@ -161,8 +160,6 @@ pop_saveset(EEG, 'filename', [bdfName '.set'],'filepath', currSetfilePath); % sa
 
 fprintf('\n\n**********\ndataset saved\n**********\n\n');
 
-clear EEG; % erase saved dataset to free memmory
-
 %% Create txt file with files preprosseced and info about the preprocessing.
 
 % this part should check if a txt file with information exists and, if
@@ -189,7 +186,7 @@ origDir      = bdfPaths(1);
 destDir      = currSetfilePath;
 file         = bdf2preproc(1).name;
 
-cxcell = cell(1,numel(table_names))
+cxcell = cell(1,numel(table_names));
 
 cxcell(1,1) = {subject};
 cxcell(1,2) = task;
@@ -218,11 +215,8 @@ if exist([mainDir 'automaticRecordTable.csv']) == 2
     
 elseif ~exist([mainDir 'automaticRecordTable.csv']) == 2
     disp(['no previous record of preprocessing in ' mainDir])
-    
+    writetable(recordTable, [mainDir 'automaticRecordTable.csv'])
 end
 
-
-
-
-
-
+%%
+clear EEG; % erase saved dataset to free memmory
