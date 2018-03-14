@@ -209,25 +209,17 @@ cxcell(1,15) = {origDir};
 cxcell(1,16) = {destDir};
 cxcell(1,17) = {file};
 
-cell2table(cxcell, 'VariableNames', table_names)
+recordTable = cell2table(cxcell, 'VariableNames', table_names);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if exist([mainDir 'automaticRecordTable.csv']) == 2
+    oldRecordTable = readtable([mainDir 'automaticRecordTable.csv']);
+    newRecordTable = [oldRecordTable; recordTable];   
+    writetable(newRecordTable , [mainDir 'automaticRecordTable.csv']);
+    
+elseif ~exist([mainDir 'automaticRecordTable.csv']) == 2
+    disp(['no previous record of preprocessing in ' mainDir])
+    
+end
 
 
 
