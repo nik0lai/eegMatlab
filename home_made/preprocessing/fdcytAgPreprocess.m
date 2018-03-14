@@ -5,6 +5,8 @@
 %     Import channels location
 %     Filter data
 
+% TODO: check line to re-reference
+
 
 %% Prepare enviroment
 
@@ -36,7 +38,7 @@ subPreproc = 404;
     % set dir
     setDir  = [mainDir 'set/'];
     % chann location dir
-    
+    channel_location_dir = '/home/niki/Documents/MATLAB/eeg_resources/chanlocs/BioSemi136_10_20a.sfp'
     
     
 %% Get participants bdf folder
@@ -72,6 +74,12 @@ bdfPaths = strcat(bdfDir, folder2preproc, '/', {bdf2preproc.name});
 
 %% Read file
 
+%%% record %%%%%%%%%%%%%%%%%%%%%
+t.start      = datetime('now') %
+duration.pre = EEG.xmax        %
+oldSamRate   = EEG.srate;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 EEG = pop_biosig(char(bdfPaths(1)));
 
 % resample
@@ -79,7 +87,7 @@ EEG = pop_resample(EEG, newSampRate);
 
 %% channels location
 
-EEG = pop_editset(EEG, 'chanlocs', [my_dir channel_location_dir]); % add channels locations
+EEG = pop_editset(EEG, 'chanlocs', channel_location_dir); % add channels locations
 
 %% re-reference
 
@@ -92,8 +100,9 @@ rerefExcl = setdiff(channExt, rerefChanns); % external channels to be exclude of
 EEG = pop_reref(EEG, [129 130], 'exclude', rerefExcl, 'keepref', 'on');
 
 %% filter
-EEG = pop_eegfiltnew(EEG, [], lowpassFilter,1690,1,[],1); % lowpass filter (what are the other parameters?)
+
 EEG = pop_eegfiltnew(EEG, [], highpassFilter,114,0,[],1); % highpass filter (what are the other parameters?)
+EEG = pop_eegfiltnew(EEG, [], lowpassFilter,1690,1,[],1); % lowpass filter (what are the other parameters?)
 
 %% cut edges
 
@@ -131,7 +140,7 @@ EEG = pop_editset(EEG, 'setname', strjoin(bdfInfo, '_')); % asign dataset name u
 % subject code
 EEG = pop_editset(EEG, 'subject', subPreproc); % subject code
 % session task-order
-EEG = pop_editset(EEG, 'session', find(ix == i));
+EEG = pop_editset(EEG, 'session', find(bdfIx == i));
 % condition (task)
 EEG = pop_editset(EEG, 'condition', bdfInfo(3)); % task condition (intero, social_learning, negation, resting)
 % group (DX)
@@ -156,7 +165,51 @@ clear EEG; % erase saved dataset to free memmory
 
 %% Create txt file with files preprosseced and info about the preprocessing.
 
+% this part should check if a txt file with information exists and, if
+% exists, append the new information to that file.
 
+% information that I want to have recorded.
+table_names = {'subject', 'taks', 'taskOrder', 'taskDurOrig', 'taskDurFinal', 'oldSmpRate', 'newSmpRate', 'lwpassFilt', 'hghpassFilt', 'newRef', 'preprocStart', 'preprocEnd', 'taskDate', 'channLocFile', 'origDir', 'destDir', 'file'};
+
+subject      = folder2preproc;
+task         = bdfInfo(3);
+taskOrder    = bdfIx(1);
+taskDurOrig  = duration.pre/60;
+taskDurFinal = EEG.xmax/60;
+oldSamRate   = EEG.srate; % oldSamRate;
+newSamRate   = EEG.srate;
+lwpassFilt   = lowpassFilter;
+hghpassFilt  = highpassFilter;
+newRef       = rerefChanns;
+preprocStart = datetime('now'); %t.start;
+preprocEnd   = datetime('now');
+taskDate     = datetime(bdf2preproc(1).datenum, 'ConvertFrom', 'datenum');
+channLocFile = extractAfter(channel_location_dir, max(strfind(channel_location_dir, '/')));
+origDir      = bdfPaths(1);
+destDir      = currSetfilePath;
+file         = bdf2preproc(1).name;
+
+cxcell = cell(1,numel(table_names))
+
+cxcell(1,1) = {subject};
+cxcell(1,2) = task;
+cxcell(1,3) = {taskOrder};
+cxcell(1,4) = {taskDurOrig};
+cxcell(1,5) = {taskDurFinal};
+cxcell(1,6) = {oldSamRate};
+cxcell(1,7) = {newSamRate};
+cxcell(1,8) = {lwpassFilt};
+cxcell(1,9) = {hghpassFilt};
+cxcell(1,10) = {int2str(newRef)};
+cxcell(1,11) = {preprocStart};
+cxcell(1,12) = {preprocEnd};
+cxcell(1,13) = {taskDate};
+cxcell(1,14) = {channLocFile};
+cxcell(1,15) = {origDir};
+cxcell(1,16) = {destDir};
+cxcell(1,17) = {file};
+
+cell2table(cxcell, 'VariableNames', table_names)
 
 
 
