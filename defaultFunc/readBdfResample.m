@@ -12,7 +12,7 @@ function readBdfResample(newSrate, bdfFiles, bdfPath, setPath)
 
 % If no bdfFiles arg passed, get bdf files from bdfPath
 if isempty(bdfFiles)    
-    bdfFiles = dir(fullfile(bdfFiles, '/*.bdf'));
+    bdfFiles = dir(fullfile(bdfPath, '/*.bdf'));
     bdfFiles = {bdfFiles.name};
 end
 
