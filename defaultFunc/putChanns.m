@@ -1,12 +1,15 @@
 function [] = putChanns(setFiles, setPath, channsPath)
-% createEKG creates a new ekg channel substracting chann2 to chann1.
+% putChanns add channel location to EEG dataset.
 % INPUT (* = required)
 %       setFiles: a cell containing .set files names. If not supplied it
 %       will looked for them within setpath.
 %       *setPath: path to folder containing set files.
 %       *channsPath: path to channels locations file
+% 
+%       e.g.
+%       putChanns(setFiles, setPath, channsPath)
 
-
+% if setFiles are not feeded, look for them
 if isempty(setFiles)
     setFile = dir([setPath '/*.set']);
     setFile = {setFile.name};
