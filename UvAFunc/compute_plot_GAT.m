@@ -100,24 +100,24 @@ end
 
 % folder to plot graph
 if (cfg_darks.trialtimeLogic == 1)
-    cfg_darks.folder_to_plot      = [cfg_darks.folder_to_plot '/' cfg_darks.balancing '/' cfg_darks.trial_time_label '/' cfg_darks.trialtime];
+    cfg_darks.folder_to_plot  = fullfile(cfg_darks.folder_to_plot, cfg_darks.balancing, cfg_darks.trial_time_label, cfg_darks.trialtime);
 elseif (cfg_darks.trialtimeLogic == 0)
-    cfg_darks.folder_to_plot      = [cfg_darks.folder_to_plot '/' cfg_darks.balancing '/' cfg_darks.trial_time_label];
+    cfg_darks.folder_to_plot  = fullfile(cfg_darks.folder_to_plot, cfg_darks.balancing, cfg_darks.trial_time_label);
 end
 
 % struct to get into loop
 if (cfg_darks.trialtimeLogic == 1)
-    str_to_loop = struct_out.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime);
+    str2loop = structOut.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime);
 elseif (cfg_darks.trialtimeLogic == 0)
-    str_to_loop = struct_out.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label);
+    str2loop = structOut.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label);
 end
 
 
 for countChann = 1:numel(cfg_darks.channelpools);     % counter
     currChann  = cfg_darks.channelpools{countChann};  % current channel pool
 
-    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
-          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
+    adam_plot_MVPA(cfg, str2loop.(currChann));                                              % plot
+          title([strrep(str2loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
     
     %%%%% pause to allow graphic to resize                 
     pause(1);
