@@ -73,26 +73,10 @@ elseif ~isempty(strfind(cfg_darks.folder_name, '_unbal_'))
 elseif ~isempty(strfind(cfg_darks.folder_name, '_bal_'))
      cfg_darks.balancing = 'balanced';
 elseif ~isfield(cfg_darks, 'balancing') && isempty(strfind(cfg_darks.folder_name, '_unbal_')) && isempty(strfind(cfg_darks.folder_name, '_bal_'))
-%     TODO: CONVERT TO ERROR + MESSAGE
-    strcat('missing argument: define cfg_darks.balancing')
+    error('missing argument: define cfg_darks.balancing')
 end
-    
-% if ~isempty(strfind(cfg_darks.folder_name, '_unbal_'))
-%      cfg_darks.balancing = 'unbalanced';
-%  elseif ~isempty(strfind(cfg_darks.folder_name, '_bal_'))
-%      cfg_darks.balancing = 'balanced';
-% %      REORDER: this has to be the first condition.
-% elseif (isempty(strfind(cfg_darks.folder_name, '_unbal_')) && isempty(strfind(cfg_darks.folder_name, '_bal_')))
-%     
-%     if isfield(cfg_darks, 'balancing')
-%     cfg_darks.balancing = cfg_darks.balancing;
-%     elseif ~isfield(cfg_darks, 'balancing')
-% %        BREAK FUNCTION AND PRINT ERROR MESSAGE
-%         print('define cfg_darks.balancing') 
-%     end
-% end
  
-%% check for trialtime
+%% check for trialtime (what's the use of this?)
 if ~isfield(cfg_darks, 'trialtime')
     cfg_darks.trialtimeLogic = 0;
 elseif isfield(cfg_darks, 'trialtime')
