@@ -149,10 +149,10 @@ for countChann = 1:numel(cfg_darks.channelpools);     % counter
     % try to close graphs again     
     close(gcf); 
     
-    % DELETE TRAHS
-    % if last iteration of plotting and saving, delete str_to_loop     
+    % DELETE TRASH
+    % if last iteration of plotting and saving, delete str2loop     
     if countChann == size(cfg_darks.channelpools, 2); %detele var with struct
-        clear str_to_loop
+        clear str2loop
     end
         
 end
