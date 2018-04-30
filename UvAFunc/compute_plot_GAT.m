@@ -1,4 +1,4 @@
-function [struct_out, cfg_darks] = compute_plot_GAT(cfg, cfg_darks)
+function [structOut, cfg_darks] = compute_plot_GAT(cfg, cfg_darks)
 % COMPUTE_PLOT_GAT is a wrap-up over adam_compute_group_MVPA and 
 % adam_plot_MVPA that computes and plots GAT graphs individually. 
 % Function to compute GAT matrices and to plot graphs individually.
@@ -89,9 +89,9 @@ for countChann = 1:numel(cfg_darks.channelpools);
     
     cfg.channelpool = currChann; % set channel pool
     if (cfg_darks.trialtimeLogic == 1)
-        struct_out.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime).(currChann) = adam_compute_group_MVPA(cfg, cfg_darks.folder_name); % compute stats
+        structOut.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime).(currChann) = adam_compute_group_MVPA(cfg, cfg_darks.folder_name); % compute stats
     elseif (cfg_darks.trialtimeLogic == 0)
-        struct_out.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(currChann) = adam_compute_group_MVPA(cfg, cfg_darks.folder_name); % compute stats
+        structOut.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(currChann) = adam_compute_group_MVPA(cfg, cfg_darks.folder_name); % compute stats
     end
     
 end
