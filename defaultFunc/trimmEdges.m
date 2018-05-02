@@ -51,7 +51,7 @@ for i = 1:size(setFiles, 2)
         firstEdgeType = tmpEEG.event(1).type;     
         lastEdgeType  = tmpEEG.event(size(tmpEEG.event, 2)).type;  
         % latencies
-        firstEdgeSec = (tmpEEG.event(1).latency/tmpEEG.srate) - edgesMargins(1);     % first event latency (227)
+        firstEdgeSec = (tmpEEG.event(1).latency/tmpEEG.srate) - edgesMargins(1);                      % first event latency (227)
         lastEdgeSec  = (tmpEEG.event(size(tmpEEG.event, 2)).latency/tmpEEG.srate) + edgesMargins(2);  % last event latency
         
         tmpEEG       = pop_select( tmpEEG,'time', [firstEdgeSec lastEdgeSec]);  % select data between min max (in seconds)
@@ -108,6 +108,7 @@ for i = 1:size(setFiles, 2)
     % if last loop, convert array to table
     if (i == size(setFiles, 2))
         trackTable = array2table(trackTable, 'VariableNames', {'origDur', 'firstEvent', 'lastEvent', 'newDur', 'durDiff'});
+        trackTable = [table(setFiles', 'VariableNames', {'names'}) trackTable];        
     end
        
     
