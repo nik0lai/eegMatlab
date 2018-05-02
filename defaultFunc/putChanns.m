@@ -23,7 +23,8 @@ for i = 1:size(setFile, 2)
     tempEEG = pop_editset(tempEEG, 'chanlocs', channsPath);    
     
     pop_saveset(tempEEG  , 'filename', char(currSet),'filepath', char(setPath));
-    
+    disp([num2str(i) '/' num2str(size(setFile, 2))])
+
     
 end
 
