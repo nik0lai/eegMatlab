@@ -1,4 +1,5 @@
 function readBdfResample(newSrate, bdfFiles, bdfPath, setPath)
+function [resampTrack] = readBdfResample(newSrate, bdfFiles, bdfPath, setPath)
 % READBDFRESAMPLE reads bdf files (pop_biosig), change the sample rate,
 % export .set file.
 % INPUT (* = required)
@@ -24,6 +25,10 @@ elseif size(bdfFiles, 2) > 0
     
     for i = 1:size(bdfFiles, 2)
         
+    % table to track information
+    srateCols   = array2table(zeros(size(bdfFiles, 2), 4),'VariableNames', {'oldRate', 'newRate', 'channNum', 'eegDur'});    
+    resampTrack = [table(bdfFiles', 'VariableNames', {'name'}) srateCols];
+    
         bdfFileTmp = char(bdfFiles(i));
                 
         tmpEEG = pop_biosig(fullfile(bdfPath, bdfFileTmp));
@@ -38,7 +43,11 @@ elseif size(bdfFiles, 2) > 0
             disp(['On ' bdfFileTmp 'sample rate is: ' num2str(tmpEEG.srate) ' Hz'])
             
             tmpEEG = pop_resample(tmpEEG, newSrate);
+            resampTrack(i, 2) = {tmpEEG.srate}; % track info: original sample rate
             
+            resampTrack(i, 3) = {tmpEEG.srate}; % track info: new sample rate
+            resampTrack(i, 4) = {tmpEEG.nbchan}; % track info: number of channels
+            resampTrack(i, 5) = {tmpEEG.xmax}; % track info: eeg duration
             disp(['number of channels: ' num2str(tmpEEG.nbchan)])
             disp(['eeg duration: ' num2str(tmpEEG.xmax) ' seconds'])
             % size(EEG.times,2)/EEG.srate
