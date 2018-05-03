@@ -42,6 +42,7 @@ for i = 1:size(setFile, 2)
         pop_saveset(tempEEG, 'filename', char(currSet),'filepath', char(setPath));
     end
     
+    disp([num2str(i) '/' num2str(size(setFile, 2))])
     
 end
 
