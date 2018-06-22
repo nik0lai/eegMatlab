@@ -30,11 +30,13 @@ for i = 1:size(setFile, 2)
     tempEEG = pop_loadset('filename',char(currSet), 'filepath', char(setPath));
     
     %     filtering
-%     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,846,1,[],0);
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,846,1,[],0);
     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,1690,1,[],0); % 256
-
-%     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,58,0,[],0);
+    
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,58,0,[],0);
     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,114,0,[],0); % 256
+    %     EDIT NAME
+    tempEEG = pop_editset(tempEEG, 'setname', [tempEEG.setname 'f']);
     
     if (saveOrNotToSave == 0)
         filteredEEG = tempEEG;
