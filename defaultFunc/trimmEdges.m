@@ -38,6 +38,7 @@ end
 % % durationDiff
 
 trackTable = zeros(size(setFiles, 2), 5);
+    date = cell(size(setFiles, 2), 1);
 
 for i = 1:size(setFiles, 2)
     currSet = setFiles(i);
