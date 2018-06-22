@@ -11,7 +11,7 @@ function [filteredEEG] = twoFiltersOneCall(setFiles, setPath, lowPassEnd, highPa
 %                         Default is to save. To output the EEG struct it
 %                         is necessary to call the function with one EEG
 %                         at the time (not within a for loop).
-% 
+%
 %       e.g.
 %       twoFiltersOneCall(setFiles, setPath, lowPassEnd, highPassEnd, saveOrNotToSave)
 
@@ -51,7 +51,11 @@ for i = 1:size(setFile, 2)
         pop_saveset(tempEEG, 'filename', char(currSet),'filepath', char(setPath));
     end
     
+    disp('*****************************************')
+    disp(['highpass: ' num2str(filtOrderHighpass)])
+    disp(['lowpass: ' num2str(filtOrderLowpass)])
     disp([num2str(i) '/' num2str(size(setFile, 2))])
+    disp('*****************************************')
     
 end
 
