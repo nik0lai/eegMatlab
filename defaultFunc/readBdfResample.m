@@ -40,8 +40,7 @@ elseif size(bdfFiles, 2) > 0
             warning(['On ' bdfFileTmp ' subject. New sampling rate is bigger than actual sampling rate'])
         elseif tmpEEG.srate == newSrate
             warning(['On ' bdfFileTmp ' subject. New sampling rate is equal to actual sampling rate'])
-        elseif tmpEEG.srate > newSrate
-            disp(['On ' bdfFileTmp 'sample rate is: ' num2str(tmpEEG.srate) ' Hz'])
+        elseif tmpEEG.srate > newSrate            
             
             resampTrack(i, 2) = {tmpEEG.srate}; % track info: original sample rate
             
@@ -53,10 +52,13 @@ elseif size(bdfFiles, 2) > 0
             date(i, 1)        = {char(datetime)};     % date
             
             % Messages
+            disp('**********************************')
+            disp(['On ' bdfFileTmp ' the sample rate is: ' num2str(tmpEEG.srate) ' Hz'])
             disp(['number of channels: ' num2str(tmpEEG.nbchan)])
-            disp(['eeg duration: ' num2str(tmpEEG.xmax) ' seconds'])
+            disp(['eeg duration: ' num2str(fix(tmpEEG.xmax)) ' seconds'])
             disp([num2str(i) '/' num2str(size(bdfFiles, 2))])
             % size(EEG.times,2)/EEG.srate
+            disp('**********************************')
             
             % save dataset
             [~, ~, ~] = mkdir(setPath);
