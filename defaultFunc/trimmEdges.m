@@ -39,6 +39,10 @@ trackTable = zeros(size(setFiles, 2), 5);
 for i = 1:size(setFiles, 2)
     currSet = setFiles(i);
     
+    %     Progress indicator
+    disp('***********************************')
+    disp([num2str(i) '/' num2str(size(setFiles, 2))])
+    disp('***********************************')
     %     load dataset
     tmpEEG = pop_loadset('filename', char(currSet), 'filepath', char(setPath));
     
