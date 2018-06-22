@@ -5,7 +5,7 @@ function [] = putChanns(setFiles, setPath, channsPath)
 %       will looked for them within setpath.
 %       *setPath: path to folder containing set files.
 %       *channsPath: path to channels locations file
-% 
+%
 %       e.g.
 %       putChanns(setFiles, setPath, channsPath)
 
@@ -17,16 +17,15 @@ end
 
 for i = 1:size(setFile, 2)
     currSet = setFile(i);
-    
+    %     Read dataset
     tempEEG = pop_loadset('filename',char(currSet), 'filepath', char(setPath));
-    
-    tempEEG = pop_editset(tempEEG, 'chanlocs', channsPath);    
-    
+    %     Add channel location
+    tempEEG = pop_editset(tempEEG, 'chanlocs', channsPath);
+    %     Save dataset
     pop_saveset(tempEEG  , 'filename', char(currSet),'filepath', char(setPath));
-    disp([num2str(i) '/' num2str(size(setFile, 2))])
-
+    %     Progress indicator
+    disp([num2str(i) '/' num2str(size(setFile, 2))])    
     
 end
-
 
 end
