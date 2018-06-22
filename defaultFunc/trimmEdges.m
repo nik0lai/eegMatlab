@@ -107,21 +107,23 @@ for i = 1:size(setFiles, 2)
         
     end
     
-    % set information of trackTable     
-    trackTable(i, 2) = firstEdgeType; % first event label
-    trackTable(i, 3) = lastEdgeType; % last event label
+    % set information of trackTable
+    trackTable(i, 2) = a; % first event label
+    trackTable(i, 3) = b; % last event label
     trackTable(i, 4) = tmpEEG.xmax; % new EEG duration
-    trackTable(i, 5) = trackTable(i, 1) - trackTable(i, 4); % new EEG duration
-   
+    trackTable(i, 5) = trackTable(i, 1) - trackTable(i, 4); % difference betwen
+    date(i, 1)        = {char(datetime)};     % date
+    
     % if last loop, convert array to table
     if (i == size(setFiles, 2))
         trackTable = array2table(trackTable, 'VariableNames', {'origDur', 'firstEvent', 'lastEvent', 'newDur', 'durDiff'});
-        trackTable = [table(setFiles', 'VariableNames', {'names'}) trackTable];        
+        trackTable = [table(setFiles', 'VariableNames', {'name'}) trackTable];
     end
-       
+    
     
 end
 
+trackTable = [trackTable table(date)];
 
 end
 
