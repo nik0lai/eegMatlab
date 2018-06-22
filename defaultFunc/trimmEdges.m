@@ -21,10 +21,13 @@ end
 % set new folder for trimmed files
 if isempty(trimmDir)
     newDir = 'trimmed';
+    disp(['exporting trimmed datasets to: /' newDir])
 elseif strcmp(trimmDir, 'plizdont')
     newDir = '';
+    disp(['exporting trimmed datasets to: /' newDir])
 elseif ~isempty(trimmDir) && ~strcmp(trimmDir, 'plizdont')
     newDir = trimmDir;
+    disp(['exporting trimmed datasets to: /' newDir])
 end
 
 % struct to keep track of changes
