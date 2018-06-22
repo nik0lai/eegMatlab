@@ -31,10 +31,17 @@ for i = 1:size(setFile, 2)
     
     %     filtering
     %     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,846,1,[],0);
-    tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,1690,1,[],0); % 256
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,1690,1,[],0); % 256
+    
+    filtOrderHighpass = filtorderCalc(tempEEG.srate, lowPassEnd, []);
+    tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd, filtOrderHighpass,1,[],0); % 256
     
     %     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,58,0,[],0);
-    tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,114,0,[],0); % 256
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd, 114,0,[],0); % 256
+    
+    filtOrderLowpass = filtorderCalc(tempEEG.srate, [], highPassEnd);
+    tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd, filtOrderLowpass,0,[],0); % 256
+    
     %     EDIT NAME
     tempEEG = pop_editset(tempEEG, 'setname', [tempEEG.setname 'f']);
     
