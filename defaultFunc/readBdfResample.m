@@ -17,16 +17,18 @@ if isempty(bdfFiles)
 end
 
 % Check if there is any file within folder
-if ~size(bdfFiles, 2) > 0    
-    error(['Are you messing with me? No bdf files within ' bdfPath])    
-
+if ~size(bdfFiles, 2) > 0
+    error(['Are you messing with me? No bdf files within ' bdfPath])
+    
 elseif size(bdfFiles, 2) > 0
     
     % table to track information
-    srateCols   = array2table(zeros(size(bdfFiles, 2), 4),'VariableNames', {'oldRate', 'newRate', 'channNum', 'eegDur'});    
+    srateCols   = array2table(zeros(size(bdfFiles, 2), 4),'VariableNames', {'oldRate', 'newRate', 'channNum', 'eegDur'});
     resampTrack = [table(bdfFiles', 'VariableNames', {'name'}) srateCols];
+    % date only
+    date = cell(size(bdfFiles, 2), 1);
     
-    for i = 1:size(bdfFiles, 2)        
+    for i = 1:size(bdfFiles, 2)
         bdfFileTmp = char(bdfFiles(i));
         
         % read dataset, change name
@@ -47,7 +49,8 @@ elseif size(bdfFiles, 2) > 0
             
             resampTrack(i, 3) = {tmpEEG.srate};       % track info: new sample rate
             resampTrack(i, 4) = {tmpEEG.nbchan};      % track info: number of channels
-            resampTrack(i, 5) = {tmpEEG.xmax}; % track info: eeg duration
+            resampTrack(i, 5) = {round(tmpEEG.xmax)}; % track info: eeg duration
+            date(i, 1)        = {char(datetime)};     % date
             
             % Messages
             disp(['number of channels: ' num2str(tmpEEG.nbchan)])
@@ -69,5 +72,7 @@ elseif size(bdfFiles, 2) > 0
     
     
 end
+
+resampTrack = [resampTrack table(date)];
 
 end
