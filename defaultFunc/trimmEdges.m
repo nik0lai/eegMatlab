@@ -108,6 +108,20 @@ for i = 1:size(setFiles, 2)
         
     end
     
+    
+    %     if event labels are char, convert to num
+    if isnumeric(firstEdgeType)
+        a = firstEdgeType;
+    elseif ischar(firstEdgeType)
+        a = str2num(firstEdgeType);
+    end
+    
+    if isnumeric(lastEdgeType)
+        b = lastEdgeType;
+    elseif ischar(lastEdgeType)
+        b = str2num(lastEdgeType);
+    end
+    
     % set information of trackTable
     trackTable(i, 2) = a; % first event label
     trackTable(i, 3) = b; % last event label
