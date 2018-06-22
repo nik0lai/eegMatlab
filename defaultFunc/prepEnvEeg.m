@@ -6,8 +6,8 @@ function [] = prepEnvEeg()
 % eeglab ways (without opening the grapich interface, closes everything,
 % and clears the command window.
 
-clear;            % clear enviroment
-eeglab nogui;     % open eeglab to lighten paths to the eeglab ways
+evalin('base','clear'); % clear enviroment
+eeglab;     % open eeglab to lighten paths to the eeglab ways
 close all;        % close everything
 clc;              % clear command line
 
