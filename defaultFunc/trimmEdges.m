@@ -51,13 +51,14 @@ for i = 1:size(setFiles, 2)
     
     if isempty(firstEvent) && isempty(lastEvent)
         
-        % labels
+        % Get labels of first and last event
         firstEdgeType = tmpEEG.event(1).type;     
         lastEdgeType  = tmpEEG.event(size(tmpEEG.event, 2)).type;  
-        % latencies
+        % Get latencies of first and last event
         firstEdgeSec = (tmpEEG.event(1).latency/tmpEEG.srate) - edgesMargins(1);                      % first event latency (227)
         lastEdgeSec  = (tmpEEG.event(size(tmpEEG.event, 2)).latency/tmpEEG.srate) + edgesMargins(2);  % last event latency
         
+        %         Actual trimming
         tmpEEG       = pop_select( tmpEEG,'time', [firstEdgeSec lastEdgeSec]);  % select data between min max (in seconds)
         
         [~, ~, ~] = mkdir(fullfile(char(setPath), newDir));
