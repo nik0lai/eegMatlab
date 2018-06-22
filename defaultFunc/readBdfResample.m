@@ -3,7 +3,7 @@ function [resampTrack] = readBdfResample(newSrate, bdfFiles, bdfPath, setPath, b
 % export .set file.
 % INPUT (* = required)
 %       *newSrate: a number indicating the new sampling rate. If the number
-%                  is bigger than the current sampling rate a warning will 
+%                  is bigger than the current sampling rate a warning will
 %                  appear.
 %       bdfFiles: a cell with bdf file names. If empty it will look for all
 %                 bdf files within bdfFiles
@@ -11,7 +11,7 @@ function [resampTrack] = readBdfResample(newSrate, bdfFiles, bdfPath, setPath, b
 %       *setPath: path to folder where set files will be write
 
 % If no bdfFiles arg passed, get bdf files from bdfPath
-if isempty(bdfFiles)    
+if isempty(bdfFiles)
     bdfFiles = dir(fullfile(bdfPath, '/*.bdf'));
     bdfFiles = {bdfFiles.name};
 end
@@ -20,6 +20,7 @@ end
 if ~size(bdfFiles, 2) > 0
     error(['Are you messing with me? No bdf files within ' bdfPath])
     
+% Iterate through bdf files
 elseif size(bdfFiles, 2) > 0
     
     % table to track information
