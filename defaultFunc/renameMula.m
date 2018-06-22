@@ -1,13 +1,12 @@
-function [] = putChanns(setFiles, setPath, channsPath)
+function [] = renameMula(setFiles, setPath)
 % putChanns add channel location to EEG dataset.
 % INPUT (* = required)
 %       setFiles: a cell containing .set files names. If not supplied it
 %       will looked for them within setpath.
 %       *setPath: path to folder containing set files.
-%       *channsPath: path to channels locations file
 %
 %       e.g.
-%       putChanns(setFiles, setPath, channsPath)
+%       renameMula(setFiles, setPath)
 
 % if setFiles are not feeded, look for them
 if isempty(setFiles)
@@ -17,15 +16,19 @@ end
 
 for i = 1:size(setFile, 2)
     currSet = setFile(i);
-    %     Read dataset
+    %     Load dataset
     tempEEG = pop_loadset('filename',char(currSet), 'filepath', char(setPath));
-    %     Add channel location
-    tempEEG = pop_editset(tempEEG, 'chanlocs', channsPath);
-    %     Save dataset
+    %     Create new name
+    newName = strrep(tempEEG.setname, ' resampled', '_s');
+    %     Replace old with new name
+    tempEEG = pop_editset(tempEEG, 'setname', newName);
+    %         Save dataset
     pop_saveset(tempEEG  , 'filename', char(currSet),'filepath', char(setPath));
+    
     %     Progress indicator
-    disp([num2str(i) '/' num2str(size(setFile, 2))])    
+    disp([num2str(i) '/' num2str(size(setFile, 2))])
     
 end
+
 
 end

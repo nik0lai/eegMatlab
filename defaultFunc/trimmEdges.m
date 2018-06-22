@@ -21,10 +21,13 @@ end
 % set new folder for trimmed files
 if isempty(trimmDir)
     newDir = 'trimmed';
+    disp(['exporting trimmed datasets to: /' newDir])
 elseif strcmp(trimmDir, 'plizdont')
     newDir = '';
+    disp(['exporting trimmed datasets to: /' newDir])
 elseif ~isempty(trimmDir) && ~strcmp(trimmDir, 'plizdont')
     newDir = trimmDir;
+    disp(['exporting trimmed datasets to: /' newDir])
 end
 
 % struct to keep track of changes
@@ -35,10 +38,15 @@ end
 % % durationDiff
 
 trackTable = zeros(size(setFiles, 2), 5);
+    date = cell(size(setFiles, 2), 1);
 
 for i = 1:size(setFiles, 2)
     currSet = setFiles(i);
     
+    %     Progress indicator
+    disp('***********************************')
+    disp([num2str(i) '/' num2str(size(setFiles, 2))])
+    disp('***********************************')
     %     load dataset
     tmpEEG = pop_loadset('filename', char(currSet), 'filepath', char(setPath));
     
@@ -47,13 +55,14 @@ for i = 1:size(setFiles, 2)
     
     if isempty(firstEvent) && isempty(lastEvent)
         
-        % labels
+        % Get labels of first and last event
         firstEdgeType = tmpEEG.event(1).type;     
         lastEdgeType  = tmpEEG.event(size(tmpEEG.event, 2)).type;  
-        % latencies
-        firstEdgeSec = (tmpEEG.event(1).latency/tmpEEG.srate) - edgesMargins(1);     % first event latency (227)
+        % Get latencies of first and last event
+        firstEdgeSec = (tmpEEG.event(1).latency/tmpEEG.srate) - edgesMargins(1);                      % first event latency (227)
         lastEdgeSec  = (tmpEEG.event(size(tmpEEG.event, 2)).latency/tmpEEG.srate) + edgesMargins(2);  % last event latency
         
+        %         Actual trimming
         tmpEEG       = pop_select( tmpEEG,'time', [firstEdgeSec lastEdgeSec]);  % select data between min max (in seconds)
         
         [~, ~, ~] = mkdir(fullfile(char(setPath), newDir));
@@ -99,20 +108,37 @@ for i = 1:size(setFiles, 2)
         
     end
     
-    % set information of trackTable     
-    trackTable(i, 2) = firstEdgeType; % first event label
-    trackTable(i, 3) = lastEdgeType; % last event label
+    
+    %     if event labels are char, convert to num
+    if isnumeric(firstEdgeType)
+        a = firstEdgeType;
+    elseif ischar(firstEdgeType)
+        a = str2num(firstEdgeType);
+    end
+    
+    if isnumeric(lastEdgeType)
+        b = lastEdgeType;
+    elseif ischar(lastEdgeType)
+        b = str2num(lastEdgeType);
+    end
+    
+    % set information of trackTable
+    trackTable(i, 2) = a; % first event label
+    trackTable(i, 3) = b; % last event label
     trackTable(i, 4) = tmpEEG.xmax; % new EEG duration
-    trackTable(i, 5) = trackTable(i, 1) - trackTable(i, 4); % new EEG duration
-   
+    trackTable(i, 5) = trackTable(i, 1) - trackTable(i, 4); % difference betwen
+    date(i, 1)        = {char(datetime)};     % date
+    
     % if last loop, convert array to table
     if (i == size(setFiles, 2))
         trackTable = array2table(trackTable, 'VariableNames', {'origDur', 'firstEvent', 'lastEvent', 'newDur', 'durDiff'});
+        trackTable = [table(setFiles', 'VariableNames', {'name'}) trackTable];
     end
-       
+    
     
 end
 
+trackTable = [trackTable table(date)];
 
 end
 

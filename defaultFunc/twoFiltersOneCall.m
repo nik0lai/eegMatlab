@@ -11,7 +11,7 @@ function [filteredEEG] = twoFiltersOneCall(setFiles, setPath, lowPassEnd, highPa
 %                         Default is to save. To output the EEG struct it
 %                         is necessary to call the function with one EEG
 %                         at the time (not within a for loop).
-% 
+%
 %       e.g.
 %       twoFiltersOneCall(setFiles, setPath, lowPassEnd, highPassEnd, saveOrNotToSave)
 
@@ -30,11 +30,20 @@ for i = 1:size(setFile, 2)
     tempEEG = pop_loadset('filename',char(currSet), 'filepath', char(setPath));
     
     %     filtering
-%     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,846,1,[],0);
-    tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,1690,1,[],0); % 256
-
-%     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,58,0,[],0);
-    tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,114,0,[],0); % 256
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,846,1,[],0);
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd,1690,1,[],0); % 256
+    
+    filtOrderHighpass = filtorderCalc(tempEEG.srate, lowPassEnd, []);
+    tempEEG = pop_eegfiltnew(tempEEG, [],lowPassEnd, filtOrderHighpass,1,[],0); % 256
+    
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd,58,0,[],0);
+    %     tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd, 114,0,[],0); % 256
+    
+    filtOrderLowpass = filtorderCalc(tempEEG.srate, [], highPassEnd);
+    tempEEG = pop_eegfiltnew(tempEEG, [],highPassEnd, filtOrderLowpass,0,[],0); % 256
+    
+    %     EDIT NAME
+    tempEEG = pop_editset(tempEEG, 'setname', [tempEEG.setname 'f']);
     
     if (saveOrNotToSave == 0)
         filteredEEG = tempEEG;
@@ -42,6 +51,11 @@ for i = 1:size(setFile, 2)
         pop_saveset(tempEEG, 'filename', char(currSet),'filepath', char(setPath));
     end
     
+    disp('*****************************************')
+    disp(['highpass: ' num2str(filtOrderHighpass)])
+    disp(['lowpass: ' num2str(filtOrderLowpass)])
+    disp([num2str(i) '/' num2str(size(setFile, 2))])
+    disp('*****************************************')
     
 end
 
