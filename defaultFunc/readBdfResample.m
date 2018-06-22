@@ -1,4 +1,4 @@
-function [resampTrack] = readBdfResample(newSrate, bdfFiles, bdfPath, setPath)
+function [resampTrack] = readBdfResample(newSrate, bdfFiles, bdfPath, setPath, bdfDirDonner)
 % READBDFRESAMPLE reads bdf files (pop_biosig), change the sample rate,
 % export .set file.
 % INPUT (* = required)
@@ -45,8 +45,8 @@ elseif size(bdfFiles, 2) > 0
             
             tmpEEG = pop_resample(tmpEEG, newSrate); % re-sample eeg.
             
-            resampTrack(i, 3) = {tmpEEG.srate}; % track info: new sample rate
-            resampTrack(i, 4) = {tmpEEG.nbchan}; % track info: number of channels
+            resampTrack(i, 3) = {tmpEEG.srate};       % track info: new sample rate
+            resampTrack(i, 4) = {tmpEEG.nbchan};      % track info: number of channels
             resampTrack(i, 5) = {tmpEEG.xmax}; % track info: eeg duration
             
             % Messages
@@ -58,6 +58,10 @@ elseif size(bdfFiles, 2) > 0
             % save dataset
             [~, ~, ~] = mkdir(setPath);
             pop_saveset( tmpEEG, 'filename', bdfFileTmp,'filepath',setPath);
+            
+            % Move bdf file to done folder
+            comandMove = ['mv ' fullfile(bdfPath, bdfFileTmp) ' ' bdfDirDonner];
+            system(comandMove);            
             
         end
         
